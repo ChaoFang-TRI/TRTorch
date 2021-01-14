@@ -6,7 +6,7 @@ This is a quick benchmarking application for TRTorch. It lets you run supported 
 
 Run with bazel:
 
-> Note: Make sure libtorch and TensorRT are in your LD_LIBRARY_PATH before running, if you need a location you can `export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:[WORKSPACE ROOT]/bazel-TRTorch/external/libtorch/lib:[WORKSPACE ROOT]/bazel-TRTorch/external/tensorrt/lib`
+> Note: Make sure libtorch and TensorRT are in your LD_LIBRARY_PATH before running, if you need a location you can `export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:[WORKSPACE ROOT]/bazel-trtorch/external/libtorch/lib:[WORKSPACE ROOT]/bazel-TRTorch/external/tensorrt/lib`
 
 ``` sh
 bazel run //cpp/benchmark --cxxopt="-DNDEBUG" --cxxopt="-DJIT" --cxxopt="-DTRT" -- [PATH TO JIT MODULE FILE] [INPUT SIZE (explicit batch)]

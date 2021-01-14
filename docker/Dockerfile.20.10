@@ -1,6 +1,6 @@
 FROM nvcr.io/nvidia/pytorch:20.10-py3
 
-RUN apt-get update && apt-get install -y curl gnupg  && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y curl gnupg zip unzip && rm -rf /var/lib/apt/lists/*
 
 RUN curl https://bazel.build/bazel-release.pub.gpg | apt-key add - && \
     echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | tee /etc/apt/sources.list.d/bazel.list
@@ -16,8 +16,14 @@ COPY ./docker/WORKSPACE.cu.docker  /opt/trtorch/WORKSPACE
 
 # Workaround for bazel expecting both static and shared versions, we only use shared libraries inside container
 RUN cp /usr/lib/x86_64-linux-gnu/libnvinfer.so /usr/lib/x86_64-linux-gnu/libnvinfer_static.a
+#RUN pip3 uninstall -y tensorrt
+#RUN apt-get purge -y "libnvinfer*"
 
 WORKDIR /opt/trtorch
+# RUN unzip TensorRT-7.2.1.6-oss.zip
+# RUN export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/trtorch/TensorRT-7.2.1.6-oss/lib
+# RUN export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/trtorch/TensorRT-7.2.1.6-oss/include
+RUN bazel clean
 RUN bazel build //:libtrtorch --compilation_mode opt
 
 WORKDIR /opt/trtorch/py
@@ -34,7 +40,7 @@ RUN python3 setup.py install --use-cxx11-abi
 
 RUN conda init bash
 
-ENV LD_LIBRARY_PATH /opt/conda/lib/python3.6/site-packages/torch/lib:$LD_LIBRARY_PATh
+ENV LD_LIBRARY_PATH /opt/conda/lib/python3.6/site-packages/torch/lib:$LD_LIBRARY_PATH
 
 WORKDIR /opt/trtorch/
 CMD /bin/bash

@@ -4,7 +4,7 @@ bazel-bin
 bazel-genfiles
 bazel-out
 bazel-testlogs
-bazel-TRTorch
+bazel-trtorch
 third_party/pytorch
 *.jit
 *.jit.pt

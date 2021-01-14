@@ -185,7 +185,7 @@ A tarball with the include files and library can then be found in bazel-bin
 ### Running TRTorch on a JIT Graph
 
 > Make sure to add LibTorch to your LD_LIBRARY_PATH <br>
->`export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(pwd)/bazel-TRTorch/external/libtorch/lib`
+>`export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(pwd)/bazel-trtorch/external/libtorch/lib`
 
 
 ``` shell
